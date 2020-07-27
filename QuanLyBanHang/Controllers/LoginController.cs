@@ -2,48 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.Data.Entites;
-using Application.Data.Models.Account;
+using Application.Data.Models.Login;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuanLyBanHang.Common;
 using QuanLyBanHang.Interface;
-using QuanLyBanHang.Repositories;
 
 namespace QuanLyBanHang.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class LoginController : ControllerBase
     {
-        private readonly IAccount _account;
-        public AccountController(IAccount account)
+        private readonly ILogin _login;
+
+        public LoginController(ILogin login)
         {
-            _account = account;
+            _login = login;
         }
-        // GET: api/Account
+        // GET: api/Login
         [HttpGet]
-        public IActionResult Get()
+        public IEnumerable<string> Get()
         {
-            List<Account> list = _account.GetAll();
-            return Ok(list);
+            return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Account/5
-        [HttpGet("{id}", Name = "GetAccount")]
+        // GET: api/Login/5
+        [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Account
+        // POST: api/Login
         [HttpPost]
-        public bool Post(AccountModel accountModel)
+        public ActionResult Post(LoginModel loginModel)
         {
-            var check = _account.Register(accountModel);
-            return check;
+            var returnResult = _login.CheckLogin(loginModel);
+            return Ok(returnResult);
         }
 
-        // PUT: api/Account/5
+        // PUT: api/Login/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

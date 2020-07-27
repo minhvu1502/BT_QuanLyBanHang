@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Data.Context;
 using Application.Data.Entites;
+using Application.Data.Models.Account;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuanLyBanHang.Common;
 using QuanLyBanHang.Interface;
 
 namespace QuanLyBanHang.Repositories
@@ -15,9 +18,30 @@ namespace QuanLyBanHang.Repositories
         public AccountRepository()
         {
         }
-        public async Task<List<Account>> GetAll()
+        public List<Account> GetAll()
         {
-            return await _db.Accounts.ToListAsync();
+            return _db.Accounts.ToList();
+        }
+
+        public bool Register(AccountModel accountModel)
+        {
+            var model = _db.Accounts.FirstOrDefault(x=>x.Username == accountModel.Username);
+            if (model == null)
+            {
+                Account account = new Account()
+                {
+                    Username = accountModel.Username,
+                    Password = new Hash().HashPassword(accountModel.Password),
+                    Name = accountModel.Name,
+                    Email = accountModel.Email,
+                    Status = accountModel.Status
+                };
+                _db.Accounts.Add(account);
+                _db.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
     }
 }
