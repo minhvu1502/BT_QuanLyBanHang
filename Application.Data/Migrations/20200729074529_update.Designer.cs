@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200717101641_Init")]
-    partial class Init
+    [Migration("20200729074529_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,13 +161,10 @@ namespace Application.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaNhanVien")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("NgayNhap")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("NhanVienMaNhanVien")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("TongTien")
                         .HasColumnType("float");
@@ -176,7 +173,7 @@ namespace Application.Data.Migrations
 
                     b.HasIndex("MaNhaCungCap");
 
-                    b.HasIndex("NhanVienMaNhanVien");
+                    b.HasIndex("MaNhanVien");
 
                     b.ToTable("HoaDonNhap");
                 });
@@ -344,8 +341,8 @@ namespace Application.Data.Migrations
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("GioiTinh")
-                        .HasColumnType("bit");
+                    b.Property<string>("GioiTinh")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaQue")
                         .HasColumnType("nvarchar(450)");
@@ -378,7 +375,7 @@ namespace Application.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaKhach")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaNhanVien")
                         .HasColumnType("nvarchar(450)");
@@ -395,6 +392,8 @@ namespace Application.Data.Migrations
                     b.HasKey("MaPhieu");
 
                     b.HasIndex("MaBan");
+
+                    b.HasIndex("MaKhach");
 
                     b.HasIndex("MaNhanVien");
 
@@ -487,7 +486,7 @@ namespace Application.Data.Migrations
 
                     b.HasOne("Application.Data.Entites.NhanVien", "NhanVien")
                         .WithMany("HoaDonNhaps")
-                        .HasForeignKey("NhanVienMaNhanVien");
+                        .HasForeignKey("MaNhanVien");
                 });
 
             modelBuilder.Entity("Application.Data.Entites.MonAn", b =>
@@ -527,13 +526,11 @@ namespace Application.Data.Migrations
 
                     b.HasOne("Application.Data.Entites.KhachHang", "KhachHang")
                         .WithMany("PhieuDatBans")
-                        .HasForeignKey("MaNhanVien");
+                        .HasForeignKey("MaKhach");
 
                     b.HasOne("Application.Data.Entites.NhanVien", "NhanVien")
                         .WithMany("PhieuDatBans")
-                        .HasForeignKey("MaPhieu")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaNhanVien");
                 });
 #pragma warning restore 612, 618
         }

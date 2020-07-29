@@ -4,14 +4,16 @@ using Application.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Application.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200729071505_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,10 +161,13 @@ namespace Application.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaNhanVien")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayNhap")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("NhanVienMaNhanVien")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("TongTien")
                         .HasColumnType("float");
@@ -171,7 +176,7 @@ namespace Application.Data.Migrations
 
                     b.HasIndex("MaNhaCungCap");
 
-                    b.HasIndex("MaNhanVien");
+                    b.HasIndex("NhanVienMaNhanVien");
 
                     b.ToTable("HoaDonNhap");
                 });
@@ -484,7 +489,7 @@ namespace Application.Data.Migrations
 
                     b.HasOne("Application.Data.Entites.NhanVien", "NhanVien")
                         .WithMany("HoaDonNhaps")
-                        .HasForeignKey("MaNhanVien");
+                        .HasForeignKey("NhanVienMaNhanVien");
                 });
 
             modelBuilder.Entity("Application.Data.Entites.MonAn", b =>

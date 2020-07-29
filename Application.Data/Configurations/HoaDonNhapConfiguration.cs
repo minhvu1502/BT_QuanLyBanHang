@@ -14,6 +14,7 @@ namespace Application.Data.Configurations
             builder.ToTable("HoaDonNhap");
             builder.HasKey(x => x.MaHoaDonNhap);
             builder.HasOne(x => x.NhaCungCap).WithMany(x => x.HoaDonNhaps).HasForeignKey(x => x.MaNhaCungCap);
+            builder.HasOne(x => x.NhanVien).WithMany(x => x.HoaDonNhaps).HasForeignKey(x => x.MaNhanVien);
         }
     }
 }

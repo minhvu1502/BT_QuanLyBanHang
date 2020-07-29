@@ -33,6 +33,8 @@ namespace QuanLyBanHang
             services.AddControllers();
             services.AddTransient<IAccount, AccountRepository>();
             services.AddTransient<ILogin, LoginRepository>();
+            services.AddTransient<INhanVien, EmployeeRepository>();
+            services.AddTransient<IQueQuan, QueQuanRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Application.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,11 +69,7 @@ namespace Application.Data.Migrations
                     MaLoai = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TenLoai = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoaiMonAn", x => x.MaLoai);
-                });
-
+                constraints: table => { table.PrimaryKey("PK_LoaiMonAn", x => x.MaLoai); });
             migrationBuilder.CreateTable(
                 name: "NguyenLieu",
                 columns: table => new
@@ -171,7 +167,7 @@ namespace Application.Data.Migrations
                 {
                     MaNhanVien = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Ten = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GioiTinh = table.Column<bool>(type: "bit", nullable: false),
+                    GioiTinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NgaySinh = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -277,7 +273,7 @@ namespace Application.Data.Migrations
                     NgayDung = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TongTien = table.Column<double>(type: "float", nullable: false),
                     MaBan = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    MaKhach = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaKhach = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     MaNhanVien = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -290,17 +286,17 @@ namespace Application.Data.Migrations
                         principalColumn: "MaBan",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PhieuDatBan_KhachHang_MaNhanVien",
-                        column: x => x.MaNhanVien,
+                        name: "FK_PhieuDatBan_KhachHang_MaKhach",
+                        column: x => x.MaKhach,
                         principalTable: "KhachHang",
                         principalColumn: "MaKhachHang",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PhieuDatBan_NhanVien_MaPhieu",
-                        column: x => x.MaPhieu,
+                        name: "FK_PhieuDatBan_NhanVien_MaNhanVien",
+                        column: x => x.MaNhanVien,
                         principalTable: "NhanVien",
                         principalColumn: "MaNhanVien",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,6 +415,11 @@ namespace Application.Data.Migrations
                 name: "IX_PhieuDatBan_MaBan",
                 table: "PhieuDatBan",
                 column: "MaBan");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhieuDatBan_MaKhach",
+                table: "PhieuDatBan",
+                column: "MaKhach");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhieuDatBan_MaNhanVien",

@@ -13,9 +13,9 @@ namespace Application.Data.Configurations
         {
             builder.ToTable("PhieuDatBan");
             builder.HasKey(x => x.MaPhieu);
-            builder.HasOne(x => x.NhanVien).WithMany(x => x.PhieuDatBans).HasForeignKey(x => x.MaPhieu);
+            builder.HasOne(x => x.NhanVien).WithMany(x => x.PhieuDatBans).HasForeignKey(x => x.MaNhanVien);
             builder.HasOne(x => x.Ban).WithMany(x => x.PhieuDatBans).HasForeignKey(x => x.MaBan);
-            builder.HasOne(x => x.KhachHang).WithMany(x => x.PhieuDatBans).HasForeignKey(x => x.MaNhanVien);
+            builder.HasOne(x => x.KhachHang).WithMany(x => x.PhieuDatBans).HasForeignKey(x => x.MaKhach);
         }
     }
 }

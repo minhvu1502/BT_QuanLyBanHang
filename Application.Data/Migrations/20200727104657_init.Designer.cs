@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200719043931_create")]
-    partial class create
+    [Migration("20200727104657_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -344,8 +344,8 @@ namespace Application.Data.Migrations
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("GioiTinh")
-                        .HasColumnType("bit");
+                    b.Property<string>("GioiTinh")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaQue")
                         .HasColumnType("nvarchar(450)");
@@ -378,7 +378,7 @@ namespace Application.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaKhach")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MaNhanVien")
                         .HasColumnType("nvarchar(450)");
@@ -395,6 +395,8 @@ namespace Application.Data.Migrations
                     b.HasKey("MaPhieu");
 
                     b.HasIndex("MaBan");
+
+                    b.HasIndex("MaKhach");
 
                     b.HasIndex("MaNhanVien");
 
@@ -527,13 +529,11 @@ namespace Application.Data.Migrations
 
                     b.HasOne("Application.Data.Entites.KhachHang", "KhachHang")
                         .WithMany("PhieuDatBans")
-                        .HasForeignKey("MaNhanVien");
+                        .HasForeignKey("MaKhach");
 
                     b.HasOne("Application.Data.Entites.NhanVien", "NhanVien")
                         .WithMany("PhieuDatBans")
-                        .HasForeignKey("MaPhieu")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaNhanVien");
                 });
 #pragma warning restore 612, 618
         }
