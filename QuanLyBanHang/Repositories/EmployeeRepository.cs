@@ -54,44 +54,58 @@ namespace QuanLyBanHang.Repositories
 
         public bool AddEmployee(NhanVienViewModel model)
         {
-            var check = db.NhanViens.FirstOrDefault(x => x.MaNhanVien == model.MaNhanVien);
-            if (check == null)
+            try
             {
-                NhanVien nhanVien = new NhanVien()
+                var check = db.NhanViens.FirstOrDefault(x => x.MaNhanVien == model.MaNhanVien);
+                if (check == null)
                 {
-                    MaNhanVien = model.MaNhanVien,
-                    Ten = model.Ten,
-                    GioiTinh = model.GioiTinh,
-                    NgaySinh = Convert.ToDateTime(model.NgaySinh),
-                    DiaChi = model.DiaChi,
-                    MaQue = model.MaQue,
-                    SoDienThoai = model.SoDienThoai
-                };
-                db.NhanViens.Add(nhanVien);
-                db.SaveChanges();
-                return true;
+                    NhanVien nhanVien = new NhanVien()
+                    {
+                        MaNhanVien = model.MaNhanVien,
+                        Ten = model.Ten,
+                        GioiTinh = model.GioiTinh,
+                        NgaySinh = Convert.ToDateTime(model.NgaySinh),
+                        DiaChi = model.DiaChi,
+                        MaQue = model.MaQue,
+                        SoDienThoai = model.SoDienThoai
+                    };
+                    db.NhanViens.Add(nhanVien);
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool DeleteEmployee(string Id)
         {
-            var nhanvien = db.NhanViens.FirstOrDefault(x => x.MaNhanVien == Id);
-            if (nhanvien != null)
+            try
             {
-                var listPdb = from x in db.PhieuDatBans
-                    where x.MaNhanVien == Id
-                              select x;
-                var listHdn = from x in db.HoaDonNhaps
-                    where x.MaNhanVien == Id
-                    select x;
-                db.PhieuDatBans.RemoveRange(listPdb);
-                db.HoaDonNhaps.RemoveRange(listHdn);
-                db.NhanViens.Remove(nhanvien);
-                db.SaveChanges();
-                return true;
+                var nhanvien = db.NhanViens.FirstOrDefault(x => x.MaNhanVien == Id);
+                if (nhanvien != null)
+                {
+                    var listPdb = from x in db.PhieuDatBans
+                        where x.MaNhanVien == Id
+                        select x;
+                    var listHdn = from x in db.HoaDonNhaps
+                        where x.MaNhanVien == Id
+                        select x;
+                    db.PhieuDatBans.RemoveRange(listPdb);
+                    db.HoaDonNhaps.RemoveRange(listHdn);
+                    db.NhanViens.Remove(nhanvien);
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool EditEmployee(NhanVienViewModel model)
@@ -100,19 +114,17 @@ namespace QuanLyBanHang.Repositories
             if (employee == null)
             {
                 return false;
-            }
-
+            }   
             employee.Ten = model.Ten;
             employee.CreatedBy = model.CreatedBy;
             employee.DiaChi = model.DiaChi;
             employee.GioiTinh = model.GioiTinh;
             employee.NgaySinh = Convert.ToDateTime(model.NgaySinh);
             employee.SoDienThoai = model.SoDienThoai;
-            employee.MaQue = employee.MaQue;
+            employee.MaQue = model.MaQue;
             db.SaveChanges();
             return true;
         }
-
         public bool UpdateStatus(EditStatus status)
         {
             var employee = db.NhanViens.FirstOrDefault(x => x.MaNhanVien == status.MaNhanVien);
@@ -120,7 +132,6 @@ namespace QuanLyBanHang.Repositories
             {
                 return false;
             }
-
             employee.Status = !status.Status;
             db.SaveChanges();
             return true;

@@ -31,6 +31,7 @@ namespace QuanLyBanHang
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>();
             services.AddTransient<IAccount, AccountRepository>();
             services.AddTransient<ILogin, LoginRepository>();
             services.AddTransient<INhanVien, EmployeeRepository>();
