@@ -12,5 +12,6 @@ namespace QuanLyBanHang.Interface
         bool AddHometown(QueViewModel model);
         bool EditHomeTown(QueViewModel model);
         bool DeleteHomeTown(string MaQue);
+        bool UpdateStatus(HomeEditStatus status);
     }
 }

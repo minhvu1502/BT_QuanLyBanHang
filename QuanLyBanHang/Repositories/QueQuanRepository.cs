@@ -79,5 +79,28 @@ namespace QuanLyBanHang.Repositories
                 return false;
             }
         }
+
+        public bool UpdateStatus(HomeEditStatus status)
+        {
+            try
+            {
+                var x = db.QueQuans.FirstOrDefault(x => x.MaQue == status.maQue);
+                if (status.Status == "True")
+                {
+                    x.TrangThai = false;
+                }
+                else
+                {
+                    x.TrangThai = true;
+                }
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

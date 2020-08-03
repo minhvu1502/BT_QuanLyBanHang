@@ -40,5 +40,10 @@ namespace QuanLyBanHang.Controllers
         {
             return Ok(_queQuan.DeleteHomeTown(maQue));
         }
+        [HttpPost]
+        public ActionResult UpdateStatus(HomeEditStatus status)
+        {
+            return Ok(_queQuan.UpdateStatus(status));
+        }
     }
 }
