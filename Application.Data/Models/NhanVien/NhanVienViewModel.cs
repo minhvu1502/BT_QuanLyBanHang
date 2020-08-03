@@ -12,7 +12,7 @@ namespace Application.Data.Models.NhanVien
         public string NgaySinh { get; set; }
         public string DiaChi { get; set; }
         public string SoDienThoai { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public string CreatedBy { get; set; }
         public string EditedBy { get; set; }
         public string MaQue { get; set; }

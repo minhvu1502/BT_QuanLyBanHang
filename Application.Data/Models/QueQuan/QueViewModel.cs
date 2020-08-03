@@ -8,7 +8,7 @@ namespace Application.Data.Models.QueQuan
     {
         public string MaQue { get; set; }
         public string TenQue { get; set; }
-        public bool TrangThai { get; set; }
+        public string TrangThai { get; set; }
         public string CreatedBy { get; set; }
         public string EditedBy { get; set; }
     }

@@ -30,7 +30,7 @@ namespace QuanLyBanHang.Repositories
                     DiaChi = item.DiaChi,
                     MaQue = item.MaQue,
                     SoDienThoai = item.SoDienThoai,
-                    Status = item.Status
+                    Status = item.Status.ToString(),
                 });
             }
             return lists;
@@ -67,6 +67,7 @@ namespace QuanLyBanHang.Repositories
                         NgaySinh = Convert.ToDateTime(model.NgaySinh),
                         DiaChi = model.DiaChi,
                         MaQue = model.MaQue,
+                        Status = Convert.ToBoolean(model.Status),
                         SoDienThoai = model.SoDienThoai
                     };
                     db.NhanViens.Add(nhanVien);
@@ -94,6 +95,7 @@ namespace QuanLyBanHang.Repositories
                     var listHdn = from x in db.HoaDonNhaps
                         where x.MaNhanVien == Id
                         select x;
+
                     db.PhieuDatBans.RemoveRange(listPdb);
                     db.HoaDonNhaps.RemoveRange(listHdn);
                     db.NhanViens.Remove(nhanvien);
@@ -132,7 +134,15 @@ namespace QuanLyBanHang.Repositories
             {
                 return false;
             }
-            employee.Status = !status.Status;
+
+            if (Convert.ToBoolean(status.Status) == false)
+            {
+                employee.Status = true;
+            }
+            if (Convert.ToBoolean(status.Status) == true)
+            {
+                employee.Status = false;
+            }
             db.SaveChanges();
             return true;
         }

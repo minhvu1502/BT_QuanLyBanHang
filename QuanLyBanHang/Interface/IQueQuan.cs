@@ -9,5 +9,8 @@ namespace QuanLyBanHang.Interface
     public interface IQueQuan
     {
         List<QueViewModel> GetAll();
+        bool AddHometown(QueViewModel model);
+        bool EditHomeTown(QueViewModel model);
+        bool DeleteHomeTown(string MaQue);
     }
 }
